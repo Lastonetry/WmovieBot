@@ -22,7 +22,7 @@ USERNAME = environ.get('USERNAME', "https://telegram.me/ThaFallenStar")
 LOG_CHANNEL = int(environ.get('LOG_CHANNEL', '-1002246672144'))
 MOVIE_GROUP_LINK = environ.get('MOVIE_GROUP_LINK', 'https://t.me/+dEzWVyCkW-ZhZTEx')
 CHANNELS = [int(ch) if id_pattern.search(ch) else ch for ch in environ.get('CHANNELS', '-1002172652828').split()]
-DATABASE_URI = environ.get('DATABASE_URI', "mongodb+srv://TheDazai:TheDazai2570@@cluster0.p1gvxvs.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+DATABASE_URI = environ.get('DATABASE_URI', "mongodb+srv://tabolo8539:0evqZDV4fC5fD17c@cluster0.cw8zxus.mongodb.net/?retryWrites=true&w=majority")
 
 DATABASE_NAME = environ.get('DATABASE_NAME', "FiltronDB")
 COLLECTION_NAME = environ.get('COLLECTION_NAME', 'Movies_Files')
