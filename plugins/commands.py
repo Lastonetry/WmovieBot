@@ -13,8 +13,6 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup , ForceRep
 from database.ia_filterdb import Media, get_file_details, get_bad_files, unpack_new_file_id
 from database.users_chats_db import db
 from utils import formate_file_name,  get_settings, save_group_settings, is_req_subscribed, get_size, get_shortlink, is_check_admin, get_status, temp, get_readable_time
-from gtts import gTTS
-from langdetect import detect_language
 import re
 import base64
 from info import *
@@ -32,48 +30,6 @@ async def invite(client, message):
     except Exception as e:
         print(f'Error while generating invite link : {e}\nFor chat:{toGenInvLink}')
         await message.reply(f'Error while generating invite link : {e}\nFor chat:{toGenInvLink}')
-
-def detect_language(text):
-    try:
-        data = {"text": text} 
-        response = requests.post("https://bisal-ai-api.vercel.app/lang", data=data)
-        return response.text
-    except Exception as e:
-        return "hi"
-
-@Client.on_message(filters.command("tts") & filters.private)
-async def tts(client, message):
-    try:
-        # Check if the user sent the text along with the command
-        if " " not in message.text:
-            return await message.reply("Please send the text you want to convert to audio after the /tts command.")
-
-        # Extract the text from the command
-        toConvert = message.text.split(" ", 1)[1].replace("\n", " ").replace("", "")
-
-        # Detect language and set voice
-        lang = detect_language(toConvert)
-        if lang == 'en' or lang == 'hi':
-            voice = "en-US-JennyNeural" if lang == 'en' else "hi-IN-SwaraNeural"
-        else:
-            voice = "hi-IN-SwaraNeural"  # Default to Hindi if language is not detected
-
-        # Convert to speech using gTTS
-        tts = gTTS(text=toConvert, lang=lang, slow=False)
-        tts.save("tts.mp3")
-
-        # Send the audio file
-        await message.reply_voice("tts.mp3")
-
-        # Delete the temporary audio file
-        os.remove("tts.mp3")
-
-    except Exception as e:
-        await message.reply(f"<b>Something went wrong! Please use a different string or report the error to admin: @ThaFallenStar</b>\n\nError: {e}")
-        print('err in tts',e)
-        try:
-            os.remove("tts.mp3")
-        except:pass
 
 @Client.on_message(filters.command("start") & filters.incoming)
 async def start(client:Client, message): 
